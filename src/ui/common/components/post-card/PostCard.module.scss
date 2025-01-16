@@ -1,0 +1,69 @@
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .meta {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #444;
+
+    span {
+      margin-right: 16px;
+    }
+  }
+
+  .tags {
+    margin-top: 12px;
+
+    .tag {
+      display: inline-block;
+      margin-right: 8px;
+      padding: 4px 8px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .shortlistIcon {
+    margin-top: 12px;
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+    width: max-content;
+    height: max-content;
+
+    &:hover {
+      color: #ff4d4f;
+    }
+
+    .heartIconFilled {
+      color: #ff4d4f;
+    }
+
+    .heartIconOutline {
+      color: #ccc;
+    }
+  }
+}
