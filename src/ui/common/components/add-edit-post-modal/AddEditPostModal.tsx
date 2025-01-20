@@ -38,7 +38,14 @@ const AddEditPostModal = ({ isOpen, setIsOpen, refetch }: AddEditPostModalProps)
                     refetch();
                     setIsOpen({ visible: false, id: null });
                     toast.success("Post updated successfully");
-                }
+                },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onError: (error: any) => {
+                    console.error("Error updating post:", error);
+                    toast.error(
+                        error?.response?.data?.message || "Failed to update post."
+                    );
+                },
             });
         } else {
             createPost({
@@ -50,7 +57,14 @@ const AddEditPostModal = ({ isOpen, setIsOpen, refetch }: AddEditPostModalProps)
                     refetch();
                     setIsOpen({ visible: false, id: null });
                     toast.success("Post created successfully");
-                }
+                },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onError: (error: any) => {
+                    console.error("Error creating post:", error);
+                    toast.error(
+                        error?.response?.data?.message || "Failed to create post."
+                    );
+                },
             });
         }
     };
