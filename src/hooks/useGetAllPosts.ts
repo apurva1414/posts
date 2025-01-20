@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axiosInstance from "@/libs/axios";
 
-const fetchPosts = async ({ pageParam = 0 }: { pageParam?: number }) => {
+const fetchPosts = async ({ pageParam = 1 }: { pageParam?: number }) => {
   const { data } = await axiosInstance.get("/posts", {
     params: {
-      skip: pageParam,
-      limit: 10,
+      _limit: 10,
+      _page: pageParam,
     },
   });
   return data;
@@ -15,11 +15,10 @@ export const useGetAllPosts = () => {
   return useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      const { skip, limit, total } = lastPage;
-      const nextSkip = skip + limit;
-      return nextSkip < total ? nextSkip : undefined;
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const isLastPage = lastPage.length < 10;
+      return isLastPage ? undefined : allPages.length + 1;
     },
   });
 };

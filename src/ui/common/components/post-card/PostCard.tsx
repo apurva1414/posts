@@ -1,15 +1,17 @@
 'use client';
-import { useState, useEffect } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { AiFillEdit, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import styles from "./PostCard.module.scss";
 import { useRouter } from "next/navigation";
 import { PostType } from "@/libs/types";
+import toast from "react-hot-toast";
 
 interface PostCardProps {
     post: PostType;
+    setIsAddEditPostModalOpen?: Dispatch<SetStateAction<{ visible: boolean; id: string | null; }>>;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, setIsAddEditPostModalOpen }) => {
     const [isShortlisted, setIsShortlisted] = useState(false);
     const router = useRouter();
 
@@ -25,8 +27,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
         if (isShortlisted) {
             updatedList = shortlistedPosts.filter((id: number) => id !== post.id);
+            toast.success("Post removed from shortlist");
         } else {
             updatedList = [...shortlistedPosts, post.id];
+            toast.success("Post added to shortlist");
         }
 
         localStorage.setItem("shortlistedPosts", JSON.stringify(updatedList));
@@ -39,20 +43,23 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
     return (
         <div className={styles.card} onClick={handleCardClick}>
-            <h2>{post.title}</h2>
+            <div className={styles.titleContainer}>
+                <h2>{post.title}</h2>
+                <span
+                    className={styles.editIcon}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (setIsAddEditPostModalOpen) {
+                            setIsAddEditPostModalOpen({
+                                visible: true, id: post.id as unknown as string
+                            });
+                        }
+                    }}
+                >
+                    <AiFillEdit />
+                </span>
+            </div>
             <p>{post.body.slice(0, 100)}...</p>
-            <div className={styles.meta}>
-                <span>Views: {post.views}</span>
-                <span>Likes: {post.reactions.likes}</span>
-                <span>Dislikes: {post.reactions.dislikes}</span>
-            </div>
-            <div className={styles.tags}>
-                {post.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                        #{tag}
-                    </span>
-                ))}
-            </div>
             <div
                 className={styles.shortlistIcon}
                 onClick={handleShortlist}

@@ -10,6 +10,20 @@
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+
+    .titleContainer .editIcon {
+      display: block;
+    }
+  }
+
+  .titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
+    .editIcon {
+      display: none;
+    }
   }
 
   h2 {

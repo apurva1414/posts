@@ -31,12 +31,6 @@ describe('PostCard', () => {
         userId: 1,
         title: 'Test Post',
         body: 'Test body content',
-        views: 100,
-        reactions: {
-            likes: 10,
-            dislikes: 2
-        },
-        tags: ['test', 'mock']
     };
 
     beforeEach(() => {
@@ -50,9 +44,6 @@ describe('PostCard', () => {
 
         expect(screen.getByText('Test Post')).toBeInTheDocument();
         expect(screen.getByText('Test body content...')).toBeInTheDocument();
-        expect(screen.getByText('Views: 100')).toBeInTheDocument();
-        expect(screen.getByText('#test')).toBeInTheDocument();
-        expect(screen.getByText('#mock')).toBeInTheDocument();
     });
 
     test('handles shortlist toggle correctly', () => {
