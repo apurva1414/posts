@@ -1,4 +1,5 @@
 import { ReactQueryClientProvider } from "@/libs/ReactQueryClientProvider";
+import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,6 +11,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReactQueryClientProvider>
+          <Toaster />
           {children}
         </ReactQueryClientProvider>
       </body>

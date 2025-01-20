@@ -37,8 +37,14 @@
   }
 }
 
-.loadMoreButton {
-  margin: 16px auto;
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.loadMoreButton,
+.createPostButton {
   padding: 8px 16px;
   background-color: #0070f3;
   color: white;
@@ -97,4 +103,16 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.createPost {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin-bottom: 20px;
 }

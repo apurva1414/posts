@@ -1,10 +1,13 @@
 'use client';
+
 import { useParams, useRouter } from 'next/navigation';
 import { usePostById } from '@/hooks';
 import { useState, useEffect } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import styles from './PostDetails.module.scss';
 import { FaArrowLeft } from 'react-icons/fa';
+import { Oval } from 'react-loader-spinner';
+import toast from 'react-hot-toast';
+import styles from './PostDetails.module.scss';
 
 export default function PostDetails() {
     const { id } = useParams();
@@ -23,15 +26,23 @@ export default function PostDetails() {
 
         if (isShortlisted) {
             updatedList = shortlistedPosts.filter((postId: number) => postId !== Number(id));
+            toast.success("Post removed from shortlist");
         } else {
             updatedList = [...shortlistedPosts, Number(id)];
+            toast.success("Post added to shortlist");
         }
 
         localStorage.setItem('shortlistedPosts', JSON.stringify(updatedList));
         setIsShortlisted(!isShortlisted);
     };
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) {
+        return (
+            <div className={styles.loadingContainer}>
+                <Oval color="#00BFFF" height={50} width={50} />
+            </div>
+        );
+    }
     if (error) return <p>Failed to load post.</p>;
 
     return (
@@ -46,20 +57,6 @@ export default function PostDetails() {
             <div className={styles.postContainer}>
                 <h2>{post?.title}</h2>
                 <p>{post?.body}</p>
-                <div className={styles.meta}>
-                    <span><strong>Views:</strong> {post?.views}</span>
-                    <span><strong>Likes:</strong> {post?.reactions.likes}</span>
-                    <span><strong>Dislikes:</strong> {post?.reactions.dislikes}</span>
-                </div>
-                <div className={styles.tags}>
-                    <h3>Tags:</h3>
-                    {post?.tags.map((tag: string) => (
-                        <span key={tag} className={styles.tag}>
-                            #{tag}
-                        </span>
-                    ))}
-                </div>
-
                 <div
                     className={styles.shortlistIcon}
                     onClick={handleShortlist}
